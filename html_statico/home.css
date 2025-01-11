@@ -37,11 +37,12 @@
     margin-top: 20px;
   }
   
-  .table-header {
+  .table thead tr {
     background-color: yellow;
     font-weight: bold;
     text-align: center;
   }
+  
   
   .table-wrapper {
     margin: 0 auto;
