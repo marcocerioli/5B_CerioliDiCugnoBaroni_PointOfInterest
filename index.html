@@ -17,49 +17,23 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+
     <div class="top-bar">
       <button class="btn btn-primary add-btn">Aggiungi</button>
     </div>
-    <h1 class="text-center">POINT OF INTEREST</h1>
+
+    <div class="title-container">
+      <h1>POINT OF INTEREST</h1>
+    </div>    
+
 
     <div id="login-container"></div>
 
-    <div id="form"></div>
-
     <div id="map-container"></div>
 
-    <div id="form-container" class="mb-3"></div>
+    <div id="modal-container"></div>
 
-    <div id="table-container" class="table-responsive mb-3">
-      <div class="table-wrapper">
-        <table class="table table-bordered">
-          <thead class="table-header">
-            <tr>
-              <th>Luoghi</th>
-              <th>Descrizione</th>
-              <th>Azioni</th>
-            </tr>
-          </thead>
-          
-          <tbody>
-            <tr>
-              <td>Nome</td>
-              <td>Dettagli</td>
-              <td>
-                <button class="btn btn-sm btn-primary">Rimuovi</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Nome</td>
-              <td>Dettagli</td>
-              <td>
-                <button class="btn btn-sm btn-primary">Rimuovi</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <div id="table-container"></div>
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
