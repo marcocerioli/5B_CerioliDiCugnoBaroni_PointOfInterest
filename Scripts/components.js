@@ -14,7 +14,6 @@ export function createMap(parentElement){
     }
 }
 
-
 export function createTable(parentElement) {
     let dati;
     let searchTerm = ''; // Variabile per la ricerca
