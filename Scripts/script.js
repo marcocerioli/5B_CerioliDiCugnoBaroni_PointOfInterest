@@ -1,53 +1,51 @@
-import { createTable } from './components.js';
+import { createMap, createAdd, createTable } from './components.js';
 
 const mapContainer = document.getElementById('map-container');
 const tableContainer = document.getElementById('table-container');
+const modalContainer = document.getElementById('modal-container');
+
+const add_btn = document.getElementById('add');
 
 let dati = [
     {
+        "id": "1",
         "nome": "Roma",
         "descrizione": "Capitale d'Italia, famosa per la sua storia millenaria, il Colosseo, il Vaticano e la sua cucina tradizionale.",
         "foto": "https://i.postimg.cc/rwyqGd64/roma.png"
     },
     {
+        "id": "2",
         "nome": "Milano",
         "descrizione": "Duomo🔥🔥🔥🔥."
     },
     {
+        "id": "3",
         "nome": "Vimodrone",
         "descrizione": "Capitale del mondo."
     }
 ];
 
-let map;
 
-// Funzione per creare la mappa
-function createMap(parentElement) {
-    parentElement.style.height = '500px';
-    parentElement.style.width = '100%';
-
-    map = L.map(parentElement).setView([42.5, 12.5], 5); // Coordinate dell'Italia
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors',
-    }).addTo(map);
-}
-
+let map = createMap(mapContainer);
 
 let table = createTable(tableContainer);// creo oggetto
 table.setData(dati);
 
+let add = createAdd(modalContainer);
+
+
 // Funzione per il rendering della pagina
 function render() {
-    createMap(mapContainer);
+    map.renderMap();
     table.renderTable();
+    add.createModal(add_btn);
 }
 
 render();
 
 
 
-
+// Barra di ricerca
 document.getElementById('searchButton').onclick = () => {
     let searchTerm = document.getElementById('searchInput').value;
     const dati_filtrati = dati.filter((e) =>
