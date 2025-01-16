@@ -150,6 +150,7 @@ export function createAdd(parentElement){
             // Aggiungo il nuovo luogo alla lista
             luoghi.push(nuovoLuogo);
             modal.style.display = 'none'; // Chiudo la modale
+            console.log(luoghi);
           };
         }
     }

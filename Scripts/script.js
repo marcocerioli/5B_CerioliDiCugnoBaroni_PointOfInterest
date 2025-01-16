@@ -6,7 +6,7 @@ const modalContainer = document.getElementById('modal-container');
 
 const add_btn = document.getElementById('add');
 
-let dati = [
+let luoghi = [
     {
         "id": "1",
         "nome": "Roma",
@@ -29,7 +29,7 @@ let dati = [
 let map = createMap(mapContainer);
 
 let table = createTable(tableContainer);// creo oggetto
-table.setData(dati);
+table.setData(luoghi);
 
 let add = createAdd(modalContainer);
 
