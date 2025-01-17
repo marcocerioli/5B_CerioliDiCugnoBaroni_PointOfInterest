@@ -16,24 +16,39 @@
     />
     <link rel="stylesheet" href="./style.css" />
   </head>
+
   <body>
+    <div id="container" class="container">
 
-    <div class="top-bar">
-      <button class="btn btn-primary add-btn" id="add">Aggiungi</button>
-    </div>
+      <div id="home" class="page">
+        <div class="row">
 
-    <div class="title-container">
-      <h1>POINT OF INTEREST</h1>
-    </div>    
+          <div class="top-bar">
+            <button class="btn btn-primary add-btn" id="add">Aggiungi</button>
+          </div>
+          <div class="title-container">
+            <h1>POINT OF INTEREST</h1>
+          </div>
+
+          <div id="login-container"></div>
+
+          <div id="map-container"></div>
+
+          <div id="modal-container"></div>
+
+          <div id="table-container"></div>
+
+        </div>
+        <div class="row"><a href="#admin">admin</a></div>
+      </div>
 
 
-    <div id="login-container"></div>
 
-    <div id="map-container"></div>
-
-    <div id="modal-container"></div>
-
-    <div id="table-container"></div>
+      <div id="admin" class="page">
+         <div class="row">ADMINNNNNN</div>         
+         <div class="row"><a href="#home">Home</a></div>                  
+      </div>
+    </div> 
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

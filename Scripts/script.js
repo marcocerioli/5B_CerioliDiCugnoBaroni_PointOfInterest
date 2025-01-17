@@ -1,4 +1,4 @@
-import { createMap, createAdd, createTable } from './components.js';
+import { createMap, createAdd, createTable, createNavigator } from './components.js';
 
 const mapContainer = document.getElementById('map-container');
 const tableContainer = document.getElementById('table-container');
@@ -38,7 +38,7 @@ let luoghi = [
 //
 //pubsub
 //navigator
-
+const nav=createNavigator(document.querySelector('#container'));
 let map = createMap(mapContainer);
 
 let table = createTable(tableContainer);// creo oggetto
