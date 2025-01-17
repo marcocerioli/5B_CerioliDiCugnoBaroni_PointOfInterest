@@ -1,12 +1,27 @@
 import { createMap, createAdd, createTable, createNavigator } from './components.js';
-
+import { carica, salva, luoghi } from './carica_salva.js';
 const mapContainer = document.getElementById('map-container');
 const tableContainer = document.getElementById('table-container');
 const modalContainer = document.getElementById('modal-container');
-
 const add_btn = document.getElementById('add');
+let myToken, myKey;
 
-let luoghi = [
+fetch('./conf.json') // carica le variabili da conf.json
+  .then((response) => {
+    if (!response.ok) {
+      console.log('Errore nel caricamento del file JSON');
+    }
+    return response.json();
+  })
+  .then((data) => {
+    myToken = data.cacheToken;
+    myKey = data.myKey;
+    console.log(myKey);
+    console.log(myToken);
+  })
+  .catch((error) => console.error('Errore:', error));
+
+let l = [
     {
         "id": "1",
         "nome": "Roma",
@@ -51,8 +66,8 @@ let add = createAdd(modalContainer);
 function render() {
     map.renderMap();
     table.renderTable();
-    luoghi = add.createModal(add_btn);
-    console.log(luoghi);
+    l = add.createModal(add_btn);
+    console.log(l);
 }
 
 render();
@@ -68,3 +83,5 @@ document.getElementById('searchButton').onclick = () => {
     table.setData(dati_filtrati);
     table.renderTable();
 };
+
+carica(myKey,myToken);

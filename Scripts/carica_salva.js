@@ -1,22 +1,7 @@
 let myToken, myKey;
 export let luoghi = [];
 
-fetch('./conf.json') // carica le variabili da conf.json
-  .then((response) => {
-    if (!response.ok) {
-      console.log('Errore nel caricamento del file JSON');
-    }
-    return response.json();
-  })
-  .then((data) => {
-    myToken = data.cacheToken;
-    myKey = data.myKey;
-    console.log(myKey);
-    console.log(myToken);
-  })
-  .catch((error) => console.error('Errore:', error));
-
-export function carica() {
+export function carica(myKey,myToken) {
   return fetch('https://ws.cipiaceinfo.it/cache/get', {
     headers: {
       'Content-Type': 'application/json',
@@ -35,7 +20,7 @@ export function carica() {
     .catch((err) => console.log('Errore durante il caricamento:', err));
 }
 
-export function salva(luoghi) {
+export function salva(myKey,myToken,luoghi) {
   return fetch('https://ws.cipiaceinfo.it/cache/set', {
     headers: {
       'Content-Type': 'application/json',
