@@ -45,6 +45,7 @@ export function createTable(parentElement) {
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Descrizione</th>
+                    <th>Coordinate</th>
                     <th>Foto</th>
                 </tr>
             </thead>
@@ -58,6 +59,7 @@ export function createTable(parentElement) {
                     <td>${e.id}</td>
                     <td>${e.nome}</td>
                     <td>${e.descrizione}</td>
+                    <td>${e.coordinate}</td>
                     <td>
                         ${e.foto ? `<img src="${e.foto}" alt="${e.nome}" style="width: 150px; height: auto;">` : 'N/A'}
                     </td>
@@ -104,6 +106,11 @@ export function createAdd(parentElement){
                       </div>
 
                       <div class="form-group">
+                        <label for="coordinate">Coordinate</label>
+                        <input type="text" class="form-control" id="coordinate" required>
+                      </div>
+
+                      <div class="form-group">
                         <label for="foto">Foto (url)</label>
                         <input type="text" class="form-control" id="foto" required>
                       </div>
@@ -136,6 +143,7 @@ export function createAdd(parentElement){
           submitButton.onclick = () => {
             const nome = document.getElementById('nome').value;
             const descrizione = document.getElementById('descrizione').value;
+            const coordinate = document.getElementById('coordinate').value;
             const foto = document.getElementById('nome').value;
 
             modal.style.display = 'none';
@@ -144,14 +152,29 @@ export function createAdd(parentElement){
               id: luoghi.length + 1,
               noem: nome,
               descrizione: descrizione,
+              coordinate: coordinate,
               foto: foto
             };
         
             // Aggiungo il nuovo luogo alla lista
             luoghi.push(nuovoLuogo);
             modal.style.display = 'none'; // Chiudo la modale
-            console.log(luoghi);
+            console.log(luoghi)
           };
         }
     }
 }
+
+
+/*
+const createPubSub = () => {
+  const dict = {};
+  return{
+    subscribe: (event, callback) => {
+      if(!click[event]){
+        dict[event]
+      }
+    }
+  }
+}
+*/

@@ -11,20 +11,33 @@ let luoghi = [
         "id": "1",
         "nome": "Roma",
         "descrizione": "Capitale d'Italia, famosa per la sua storia millenaria, il Colosseo, il Vaticano e la sua cucina tradizionale.",
+        "coordinate": "00000000000",
         "foto": "https://i.postimg.cc/rwyqGd64/roma.png"
     },
     {
         "id": "2",
         "nome": "Milano",
-        "descrizione": "Duomo🔥🔥🔥🔥."
+        "descrizione": "Duomo🔥🔥🔥🔥.",
+        "coordinate": "00000000000",
+        "foto": "https://i.postimg.cc/rwyqGd64/roma.png"
+
     },
     {
         "id": "3",
         "nome": "Vimodrone",
-        "descrizione": "Capitale del mondo."
+        "descrizione": "Capitale del mondo.",
+        "coordinate": "00000000000",
+        "foto": "https://i.postimg.cc/rwyqGd64/roma.png"
+
     }
 ];
 
+//admin componente in una pag admin
+//oggetto che entrambi vedeono e notifica pub sub       lista mappa e elenco
+//dirty ----> cache
+//
+//pubsub
+//navigator
 
 let map = createMap(mapContainer);
 
@@ -38,7 +51,8 @@ let add = createAdd(modalContainer);
 function render() {
     map.renderMap();
     table.renderTable();
-    add.createModal(add_btn);
+    luoghi = add.createModal(add_btn);
+    console.log(luoghi);
 }
 
 render();
