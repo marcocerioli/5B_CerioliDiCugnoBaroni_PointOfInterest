@@ -28,7 +28,7 @@ fetch('./conf.json')
       });
   })
   .catch((error) => console.error('Errore:', error));
-
+/*
 let l = [
     {
         "id": "1",
@@ -54,6 +54,7 @@ let l = [
 
     }
 ];
+*/
 
 const pubsub = createPubSub();
 

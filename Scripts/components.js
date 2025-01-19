@@ -64,7 +64,11 @@ export function createTable(parentElement, pubsub) {
           });
           
           html += '</tbody></table>';
-          parentElement.innerHTML = html;            
+          parentElement.innerHTML = html;
+          const rimuovi=document.getElementById("rimuovi");
+          rimuovi.onclick = () => {
+            console.log("baroni");
+          };     
         },
 
         renderTable: () => {
