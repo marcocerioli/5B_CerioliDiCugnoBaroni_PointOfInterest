@@ -26,6 +26,47 @@ export function createTable(parentElement, pubsub) {
             dati = newData
         },
 
+        renderTableAdmin: () => {
+          let html = '';
+
+          // Struttura della tabella
+          html += '<table class="table table-bordered table-striped table-container">';
+          html += `
+          <thead class="prova">
+              <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Descrizione</th>
+                  <th>Coordinate</th>
+                  <th>Foto</th>
+                  <th>Azioni</th>
+              </tr>
+          </thead>
+          <tbody>
+          `;            
+
+          // Aggiunta delle righe con i dati filtrati
+          dati.forEach((e) => {
+              html += `
+              <tr>
+                  <td>${e.id}</td>
+                  <td>${e.nome}</td>
+                  <td>${e.descrizione}</td>
+                  <td>${e.coordinate}</td>
+                  <td>
+                      <img src="${e.foto}" alt="${e.nome}" style="width: 150px; height: auto;">
+                  </td>
+                  <td>
+                    <button type="button" id="rimuovi" class="btn btn-secondary">Rimuovi</button>
+                  </td>
+              </tr>
+              `;
+          });
+          
+          html += '</tbody></table>';
+          parentElement.innerHTML = html;            
+        },
+
         renderTable: () => {
             let html = '';
 
@@ -165,7 +206,7 @@ export function createAdd(parentElement, pubsub) {
   };
 }
 
-export function createLogin(parentElement, myToken) {
+export function createLogin(parentElement, myToken, pubsub) {
     let isLogged = false;
 
     return {
@@ -251,6 +292,7 @@ export function createLogin(parentElement, myToken) {
         login(inputName, inputPassword).then((result) => {
             if (result) {
                 isLogged = true;
+                pubsub.publish("Logged",isLogged);
                 console.log("login riuscito");
                 console.log(inputName);
                 console.log(inputPassword);

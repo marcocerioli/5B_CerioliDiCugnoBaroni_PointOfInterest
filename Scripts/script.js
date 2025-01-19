@@ -4,6 +4,7 @@ const mapContainer = document.getElementById('map-container');
 const tableContainer = document.getElementById('table-container');
 const modalContainer = document.getElementById('modal-container');
 const loginContainer = document.getElementById('login-container');
+const tableAdmin = document.getElementById('table-container-admin');
 const add_btn = document.getElementById('add');
 const login_btn = document.getElementById('login');
 let myToken, myKey;
@@ -63,9 +64,12 @@ let map = createMap(mapContainer);
 let table = createTable(tableContainer, pubsub);// creo oggetto
 table.setData(luoghi);
 
+let table2 = createTable(tableAdmin,pubsub);
+
+
 let add = createAdd(modalContainer, pubsub);
 
-let login = createLogin(loginContainer, myToken);
+let login = createLogin(loginContainer, myToken, pubsub);
 login.createModal(login_btn);
 
 
@@ -95,8 +99,11 @@ pubsub.subscribe("newPlaceAdded", (newLuoghi) => {
 });
 
 
-//render();
-
+pubsub.subscribe("Logged", (isLogged) => {
+  console.log("bravo zio tabella aggiornata.");
+  table2.setData(luoghi); // aggiorna i dati della tabella
+  table2.renderTableAdmin(); // render della tabella con i nuovi dati
+});
 
 // barra di ricerca
 document.getElementById('searchButton').onclick = () => {
