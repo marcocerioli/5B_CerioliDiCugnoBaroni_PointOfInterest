@@ -16,7 +16,7 @@ export function createMap(parentElement){
     }
 }
 
-export function createTable(parentElement) {
+export function createTable(parentElement, pubsub) {
     let dati;
     let searchTerm = ''; // Variabile per la ricerca
     return {
@@ -78,7 +78,7 @@ export function createTable(parentElement) {
     };
 }
 
-export function createAdd(parentElement){
+export function createAdd(parentElement, pubsub){
     let luoghi = [];
     return{
         createModal: (add_btn) => {
@@ -168,18 +168,20 @@ export function createAdd(parentElement){
 }
 
 
-/*
 const createPubSub = () => {
-  const dict = {};
-  return{
-    subscribe: (event, callback) => {
-      if(!click[event]){
-        dict[event]
-      }
+    const dict = {};
+    return {
+        subscribe: (eventName, callback) => {
+            if (!dict[eventName]) {
+                dict[eventName] = [];
+            }
+            dict[eventName].push(callback);
+        },
+        publish: (eventName) => {
+            dict[eventName].forEach((callback) => callback());
+        }
     }
-  }
 }
-*/
 export const createNavigator = (parentElement) => {
   const pages = Array.from(parentElement.querySelectorAll(".page"));
   

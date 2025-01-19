@@ -1,4 +1,4 @@
-import { createMap, createAdd, createTable, createNavigator } from './components.js';
+import { createMap, createAdd, createTable, createNavigator, createPubSub } from './components.js';
 import { carica, salva, luoghi } from './carica_salva.js';
 const mapContainer = document.getElementById('map-container');
 const tableContainer = document.getElementById('table-container');
