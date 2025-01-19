@@ -53,13 +53,14 @@ let l = [
 //
 //pubsub
 //navigator
+const pubsub = createPubSub();
 const nav=createNavigator(document.querySelector('#container'));
 let map = createMap(mapContainer);
 
-let table = createTable(tableContainer);// creo oggetto
+let table = createTable(tableContainer, pubsub);// creo oggetto
 table.setData(luoghi);
 
-let add = createAdd(modalContainer);
+let add = createAdd(modalContainer, pubsub);
 
 
 // Funzione per il rendering della pagina

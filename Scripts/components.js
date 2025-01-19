@@ -168,7 +168,7 @@ export function createAdd(parentElement, pubsub){
 }
 
 
-const createPubSub = () => {
+export const createPubSub = () => {
     const dict = {};
     return {
         subscribe: (eventName, callback) => {
