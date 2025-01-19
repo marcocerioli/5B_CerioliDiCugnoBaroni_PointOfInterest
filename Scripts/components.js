@@ -165,6 +165,105 @@ export function createAdd(parentElement, pubsub) {
   };
 }
 
+export function createLogin(parentElement, myToken) {
+    let isLogged = false;
+
+    return {
+        createModal: (login_btn) => {
+            console.log("isLogged     ",isLogged)
+
+            const loginContainer = parentElement;
+
+            const loginHTML = `
+        
+            <div id="loginModal" class="modal" tabindex="-1" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+        
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Login</h1>
+                </div>
+        
+                <div class="modal-body">
+                    <form id="loginForm">
+        
+                    <div class="form-group">
+                        <label for="user">User</label>
+                        <input type="text" class="form-control" id="user" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+        
+                    <button type="button" id="submitBtn" class="btn btn-primary">Invia</button>
+                    <button type="button" id="cancelBtn" class="btn btn-secondary">Annulla</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
+            `;
+        
+            loginContainer.innerHTML += loginHTML;
+        
+            const modal = document.getElementById('loginModal');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const submitBtn = document.getElementById('submitBtn');
+        
+  
+  
+        const login = (username, password) => {
+        return new Promise((resolve, reject) => {
+            fetch("http://ws.cipiaceinfo.it/credential/login", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "key": myToken
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(r => r.json())
+            .then(r => {
+                resolve(r.result);
+            })
+            .catch(reject);
+        });
+        };
+  
+  
+        login_btn.onclick = () => {
+        modal.style.display = 'block';
+        };
+    
+        cancelBtn.onclick = () => {
+        modal.style.display = 'none';
+        };
+  
+
+        submitBtn.onclick = () => {
+        const inputName = document.getElementById('user').value;
+        const inputPassword = document.getElementById('password').value;
+        login(inputName, inputPassword).then((result) => {
+            if (result) {
+                isLogged = true;
+                console.log("login riuscito");
+                console.log(inputName);
+                console.log(inputPassword);
+                modal.style.display = 'none';
+            } else {
+                console.log("login fallita");
+            }
+        });
+        };
+        }
+    }
+  
+  }
 
 export const createPubSub = () => {
   const dict = {};

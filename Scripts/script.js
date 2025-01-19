@@ -1,9 +1,11 @@
-import { createMap, createAdd, createTable, createNavigator, createPubSub } from './components.js';
+import { createMap, createAdd, createTable, createNavigator, createPubSub, createLogin } from './components.js';
 import { carica, salva, luoghi } from './carica_salva.js';
 const mapContainer = document.getElementById('map-container');
 const tableContainer = document.getElementById('table-container');
 const modalContainer = document.getElementById('modal-container');
+const loginContainer = document.getElementById('login-container');
 const add_btn = document.getElementById('add');
+const login_btn = document.getElementById('login');
 let myToken, myKey;
 
 fetch('./conf.json')
@@ -62,6 +64,9 @@ let table = createTable(tableContainer, pubsub);// creo oggetto
 table.setData(luoghi);
 
 let add = createAdd(modalContainer, pubsub);
+
+let login = createLogin(loginContainer, myToken);
+login.createModal(login_btn);
 
 
 function render(){
