@@ -21,6 +21,8 @@ fetch('./conf.json') // carica le variabili da conf.json
   })
   .catch((error) => console.error('Errore:', error));
 
+carica(myKey,myToken);
+
 let l = [
     {
         "id": "1",
@@ -53,23 +55,35 @@ let l = [
 //
 //pubsub
 //navigator
+
 const pubsub = createPubSub();
-const nav=createNavigator(document.querySelector('#container'));
+
+const nav = createNavigator(document.querySelector('#container'));
+
 let map = createMap(mapContainer);
 
 let table = createTable(tableContainer, pubsub);// creo oggetto
-table.setData(luoghi);
+table.setData(l);
 
 let add = createAdd(modalContainer, pubsub);
 
 
 // Funzione per il rendering della pagina
 function render() {
-    map.renderMap();
-    table.renderTable();
-    l = add.createModal(add_btn);
-    console.log(l);
+  map.renderMap();
+  table.renderTable();
+  l = add.createModal(add_btn);
 }
+
+
+// Iscrizione all'evento newPlaceAdded dopo la creazione della tabella
+pubsub.subscribe("newPlaceAdded", (newLuoghi) => {
+  console.log(newLuoghi);
+  console.log("Nuovo luogo aggiunto, aggiorno la tabella.");
+  table.setData(newLuoghi); // aggiorna i dati della tabella
+  table.renderTable(); // Rende di nuovo la tabella con i nuovi dati
+});
+
 
 render();
 
@@ -84,5 +98,3 @@ document.getElementById('searchButton').onclick = () => {
     table.setData(dati_filtrati);
     table.renderTable();
 };
-
-carica(myKey,myToken);

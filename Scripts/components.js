@@ -19,6 +19,7 @@ export function createMap(parentElement){
 export function createTable(parentElement, pubsub) {
     let dati;
     let searchTerm = ''; // Variabile per la ricerca
+
     return {
 
         setData: (newData) => {
@@ -26,6 +27,7 @@ export function createTable(parentElement, pubsub) {
         },
 
         renderTable: () => {
+            console.log("RENDER-TABLE")
             let html = '';
 
             // Input per la ricerca
@@ -63,125 +65,129 @@ export function createTable(parentElement, pubsub) {
                     <td>${e.descrizione}</td>
                     <td>${e.coordinate}</td>
                     <td>
-                        ${e.foto ? `<img src="${e.foto}" alt="${e.nome}" style="width: 150px; height: auto;">` : 'N/A'}
+                        <img src="${e.foto}" alt="${e.nome}" style="width: 150px; height: auto;">
                     </td>
                 </tr>
                 `;
             });
             
-
             html += '</tbody></table>';
-            parentElement.innerHTML = html;
-            // Assegna l'evento al bottone di ricerca
-            
+            parentElement.innerHTML = html;            
         }
     };
 }
 
-export function createAdd(parentElement, pubsub){
-    let luoghi = [];
-    return{
-        createModal: (add_btn) => {
+export function createAdd(parentElement, pubsub) {
+  let luoghi = []; // Lista dei luoghi
+
+  return {
+      createModal: (add_btn) => {
           const modalContainer = parentElement;
-        
+
           // HTML della modale
-          const modalHTML = `        
-            <div id="luoghiModal" class="modal" tabindex="-1" style="display: none;">
-              <div class="modal-dialog">
-                <div class="modal-content">
-        
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5">Aggiungi Luogo</h1>
+          const modalHTML = `
+              <div id="luoghiModal" class="modal" tabindex="-1" style="display: none;">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h1 class="modal-title fs-5">Aggiungi Luogo</h1>
+                          </div>
+                          <div class="modal-body">
+                              <form id="luoghiForm">
+                                  <div class="form-group">
+                                      <label for="Nome">Nome</label>
+                                      <input type="text" class="form-control" id="nome" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="descrizione">Descrizione</label>
+                                      <textarea class="form-control" id="descrizione" required></textarea>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="coordinate">Coordinate</label>
+                                      <input type="text" class="form-control" id="coordinate" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="foto">Foto (url)</label>
+                                      <input type="text" class="form-control" id="foto" required>
+                                  </div>
+                                  <button type="button" id="submit" class="btn btn-primary">Invia</button>
+                                  <button type="button" id="cancelButton" class="btn btn-secondary">Annulla</button>
+                              </form>
+                          </div>
+                      </div>
                   </div>
-        
-                  <div class="modal-body">
-                    <form id="luoghiForm">
-        
-                      <div class="form-group">
-                        <label for="Nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" required>
-                      </div>
-        
-                      <div class="form-group">
-                        <label for="descrizione">Descrizione</label>
-                        <textarea class="form-control" id="descrizione" required></textarea>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="coordinate">Coordinate</label>
-                        <input type="text" class="form-control" id="coordinate" required>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="foto">Foto (url)</label>
-                        <input type="text" class="form-control" id="foto" required>
-                      </div>
-        
-                      <button type="button" id="submit" class="btn btn-primary">Invia</button>
-                      <button type="button" id="cancelButton" class="btn btn-secondary">Annulla</button>
-                    </form>
-                  </div>
-                </div>
               </div>
-            </div>
           `;
-        
+
           modalContainer.innerHTML += modalHTML;
-        
+
+          // Elementi della modale
           const modal = document.getElementById('luoghiModal');
           const cancelButton = document.getElementById('cancelButton');
           const submitButton = document.getElementById('submit');
-        
-         
-          add_btn.onclick = () => {
-            modal.style.display = 'block';
-            console.log("Modale mostrata:", modal.style.display);
-          };
-        
-          cancelButton.onclick = () => {
-            modal.style.display = 'none';
-          };
-        
-          submitButton.onclick = () => {
-            const nome = document.getElementById('nome').value;
-            const descrizione = document.getElementById('descrizione').value;
-            const coordinate = document.getElementById('coordinate').value;
-            const foto = document.getElementById('nome').value;
 
-            modal.style.display = 'none';
-        
-            const nuovoLuogo = {
-              id: luoghi.length + 1,
-              noem: nome,
-              descrizione: descrizione,
-              coordinate: coordinate,
-              foto: foto
-            };
-        
-            // Aggiungo il nuovo luogo alla lista
-            luoghi.push(nuovoLuogo);
-            modal.style.display = 'none'; // Chiudo la modale
-            console.log(luoghi)
+          // Mostra la modale
+          add_btn.onclick = () => {
+              modal.style.display = 'block';
+              console.log("Modale mostrata:", modal.style.display);
           };
-        }
-    }
+
+          // Nascondi la modale
+          cancelButton.onclick = () => {
+              modal.style.display = 'none';
+          };
+
+          // Invia i dati
+          submitButton.onclick = () => {
+              const nome = document.getElementById('nome').value;
+              const descrizione = document.getElementById('descrizione').value;
+              const coordinate = document.getElementById('coordinate').value;
+              const foto = document.getElementById('foto').value;
+
+              const nuovoLuogo = {
+                  id: luoghi.length + 1,
+                  nome: nome,
+                  descrizione: descrizione,
+                  coordinate: coordinate,
+                  foto: foto
+              };
+
+              // Aggiungi alla lista locale
+              luoghi.push(nuovoLuogo);
+
+              // pubblico l'evento
+              pubsub.publish("newPlaceAdded", luoghi);
+
+              // Chiudi la modale
+              modal.style.display = 'none';
+              console.log("Nuovo luogo aggiunto:", nuovoLuogo);
+          };
+      }
+  };
 }
 
 
 export const createPubSub = () => {
-    const dict = {};
-    return {
-        subscribe: (eventName, callback) => {
-            if (!dict[eventName]) {
-                dict[eventName] = [];
-            }
-            dict[eventName].push(callback);
-        },
-        publish: (eventName) => {
-            dict[eventName].forEach((callback) => callback());
-        }
-    }
+  const dict = {};
+  return {
+      subscribe: (eventName, callback) => {
+          // controllo se esiste l'evento, senno lo creo
+          if (!dict[eventName]) {
+              dict[eventName] = [];
+          }
+          // aggiungo la callback
+          dict[eventName].push(callback);
+      },
+      publish: (eventName, data) => {
+          // controllo se ce gia una callback per l'evento
+          if (dict[eventName]) {
+              // per ogni callback, invio anche i dati
+              dict[eventName].forEach((callback) => callback(data));
+          }
+      }
+  }
 }
+
 export const createNavigator = (parentElement) => {
   const pages = Array.from(parentElement.querySelectorAll(".page"));
   
