@@ -76,13 +76,13 @@ function render(){
 
 // iscrivo all evento newPlaceAdded
 pubsub.subscribe("newPlaceAdded", (newLuoghi) => {
-  luoghi.push(newLuoghi);
+  luoghi.push(...newLuoghi);
   console.log("Nuovo luogo aggiunto, aggiorno la tabella.");
   table.setData(luoghi); // aggiorna i dati della tabella
   table.renderTable(); // render della tabella con i nuovi dati
 
   // Salva i luoghi dopo averli aggiornati
-  salva(myKey, myToken, newLuoghi).then(() => {
+  salva(myKey, myToken, luoghi).then(() => {
     console.log('Luoghi salvati con successo.');
   }).catch(err => {
     console.log('Errore durante il salvataggio:', err);
