@@ -6,7 +6,7 @@ const modalContainer = document.getElementById('modal-container');
 const add_btn = document.getElementById('add');
 let myToken, myKey;
 
-fetch('./conf.json') // carica le variabili da conf.json
+fetch('./conf.json')
   .then((response) => {
     if (!response.ok) {
       console.log('Errore nel caricamento del file JSON');
@@ -18,10 +18,16 @@ fetch('./conf.json') // carica le variabili da conf.json
     myKey = data.myKey;
     console.log(myKey);
     console.log(myToken);
+
+    carica(myKey, myToken)
+      .then((loadedLuoghi) => {
+        console.log("luoghi", loadedLuoghi);
+        render();
+      });
   })
   .catch((error) => console.error('Errore:', error));
 
-carica(myKey,myToken);
+//carica(myKey,myToken);
 
 let l = [
     {
@@ -68,7 +74,6 @@ table.setData(l);
 let add = createAdd(modalContainer, pubsub);
 
 
-// Funzione per il rendering della pagina
 function render() {
   map.renderMap();
   table.renderTable();
@@ -76,20 +81,19 @@ function render() {
 }
 
 
-// Iscrizione all'evento newPlaceAdded dopo la creazione della tabella
+// iscrivo all evento newPlaceAdded
 pubsub.subscribe("newPlaceAdded", (newLuoghi) => {
-  console.log(newLuoghi);
   console.log("Nuovo luogo aggiunto, aggiorno la tabella.");
   table.setData(newLuoghi); // aggiorna i dati della tabella
-  table.renderTable(); // Rende di nuovo la tabella con i nuovi dati
+  table.renderTable(); // render della tabella con i nuovi dati
 });
 
 
-render();
+//render();
 
 
 
-// Barra di ricerca
+// barra di ricerca
 document.getElementById('searchButton').onclick = () => {
     let searchTerm = document.getElementById('searchInput').value;
     const dati_filtrati = dati.filter((e) =>
