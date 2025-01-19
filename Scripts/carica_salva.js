@@ -20,7 +20,7 @@ export function carica(myKey,myToken) {
     .catch((err) => console.log('Errore durante il caricamento:', err));
 }
 
-export function salva(myKey,myToken,luoghi) {
+export function salva(myKey, myToken, luoghi) {
   return fetch('https://ws.cipiaceinfo.it/cache/set', {
     headers: {
       'Content-Type': 'application/json',

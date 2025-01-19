@@ -16,18 +16,15 @@ fetch('./conf.json')
   .then((data) => {
     myToken = data.cacheToken;
     myKey = data.myKey;
-    console.log(myKey);
-    console.log(myToken);
+    console.log("chiave:  ", myKey);
+    console.log("token:  ", myToken);
 
-    carica(myKey, myToken)
-      .then((loadedLuoghi) => {
-        console.log("luoghi", loadedLuoghi);
+    carica(myKey, myToken).then(() => {
+        console.log("luoghi:  ", luoghi);
         render();
       });
   })
   .catch((error) => console.error('Errore:', error));
-
-//carica(myKey,myToken);
 
 let l = [
     {
@@ -55,13 +52,6 @@ let l = [
     }
 ];
 
-//admin componente in una pag admin
-//oggetto che entrambi vedeono e notifica pub sub       lista mappa e elenco
-//dirty ----> cache
-//
-//pubsub
-//navigator
-
 const pubsub = createPubSub();
 
 const nav = createNavigator(document.querySelector('#container'));
@@ -69,28 +59,38 @@ const nav = createNavigator(document.querySelector('#container'));
 let map = createMap(mapContainer);
 
 let table = createTable(tableContainer, pubsub);// creo oggetto
-table.setData(l);
+table.setData(luoghi);
 
 let add = createAdd(modalContainer, pubsub);
 
 
-function render() {
+function render(){
   map.renderMap();
+
+  table.setData(luoghi);
   table.renderTable();
-  l = add.createModal(add_btn);
+
+  luoghi = add.createModal(add_btn);
 }
 
 
 // iscrivo all evento newPlaceAdded
 pubsub.subscribe("newPlaceAdded", (newLuoghi) => {
+  luoghi.push(newLuoghi);
   console.log("Nuovo luogo aggiunto, aggiorno la tabella.");
-  table.setData(newLuoghi); // aggiorna i dati della tabella
+  table.setData(luoghi); // aggiorna i dati della tabella
   table.renderTable(); // render della tabella con i nuovi dati
+
+  // Salva i luoghi dopo averli aggiornati
+  salva(myKey, myToken, newLuoghi).then(() => {
+    console.log('Luoghi salvati con successo.');
+  }).catch(err => {
+    console.log('Errore durante il salvataggio:', err);
+  });
 });
 
 
 //render();
-
 
 
 // barra di ricerca

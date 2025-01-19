@@ -27,7 +27,6 @@ export function createTable(parentElement, pubsub) {
         },
 
         renderTable: () => {
-            console.log("RENDER-TABLE")
             let html = '';
 
             // Input per la ricerca
