@@ -9,6 +9,7 @@ const add_btn = document.getElementById('add');
 const login_btn = document.getElementById('login');
 let myToken, myKey, tokenMap;
 
+
 fetch('./conf.json')
   .then((response) => {
     if (!response.ok) {
