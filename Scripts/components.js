@@ -1,4 +1,4 @@
-import { hide, show } from './functions.js';
+import { hide, show, getCoordinates } from './functions.js';
 
 export function createMap(parentElement){
     let map;
@@ -18,12 +18,14 @@ export function createMap(parentElement){
 
 export function createTable(parentElement, pubsub) {
     let dati;
+    let token;
     let searchTerm = ''; // Variabile per la ricerca
 
     return {
 
-        setData: (newData) => {
-            dati = newData
+        setData: (newData, tokenMap) => {
+            dati = newData;
+            token = tokenMap;
         },
 
         renderTableAdmin: () => {
@@ -73,7 +75,7 @@ export function createTable(parentElement, pubsub) {
           };     
         },
 
-        renderTable: () => {
+        renderTable: (token) => {
             let html = '';
 
             // Input per la ricerca
@@ -117,6 +119,19 @@ export function createTable(parentElement, pubsub) {
                     </td>
                 </tr>
                 `;
+
+                getCoordinates(e.nome, token).then(({ lat, lon }) => {
+                    if (lat && lon) {
+                    L.marker([lat, lon])
+                        .addTo(map)
+                        .bindPopup(
+                        `<b>${e.nome}</b>`
+                        );
+                    }
+                })
+                .catch((error) => {
+                    console.error(`Errore nel recupero delle coordinate`, error);
+                });  
             });
             
             html += '</tbody></table>';

@@ -7,7 +7,7 @@ const loginContainer = document.getElementById('login-container');
 const tableAdmin = document.getElementById('table-container-admin');
 const add_btn = document.getElementById('add');
 const login_btn = document.getElementById('login');
-let myToken, myKey;
+let myToken, myKey, tokenMap;
 
 fetch('./conf.json')
   .then((response) => {
@@ -19,8 +19,10 @@ fetch('./conf.json')
   .then((data) => {
     myToken = data.cacheToken;
     myKey = data.myKey;
+    tokenMap = data.TokenLocationIQ
     console.log("chiave:  ", myKey);
     console.log("token:  ", myToken);
+    console.log("tokenMap:  ", tokenMap);
 
     carica(myKey, myToken).then(() => {
         console.log("CARICA:  ", luoghi);
@@ -48,7 +50,7 @@ login.createModal(login_btn);
 function render(){
   map.renderMap();
 
-  table.setData(luoghi);
+  table.setData(luoghi, tokenMap);
   table.renderTable();
 
   luoghi = add.createModal(add_btn);
@@ -58,7 +60,7 @@ function render(){
 // iscrivo all evento newPlaceAdded
 pubsub.subscribe("newPlaceAdded", (luoghi) => {
   console.log("Nuovo luogo aggiunto, aggiorno la tabella.");
-  table.setData(luoghi); // aggiorna i dati della tabella
+  table.setData(luoghi, tokenMap); // aggiorna i dati della tabella
   table.renderTable(); // render della tabella con i nuovi dati
 
   // Salva i luoghi dopo averli aggiornati
@@ -71,8 +73,8 @@ pubsub.subscribe("newPlaceAdded", (luoghi) => {
 
 
 pubsub.subscribe("Logged", (isLogged) => {
-  console.log("bravo zio tabella aggiornata.");
-  table2.setData(luoghi); // aggiorna i dati della tabella
+  console.log("tabella aggiornata ", isLogged);
+  table2.setData(luoghi, tokenMap); // aggiorna i dati della tabella
   table2.renderTableAdmin(); // render della tabella con i nuovi dati
 });
 
