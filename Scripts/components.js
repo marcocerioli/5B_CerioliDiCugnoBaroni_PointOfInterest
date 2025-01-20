@@ -37,7 +37,8 @@ export function createTable(parentElement, pubsub) {
                   <th>ID</th>
                   <th>Nome</th>
                   <th>Descrizione</th>
-                  <th>Coordinate</th>
+                  <th>Latitudine</th>
+                  <th>Longitudine</th>
                   <th>Foto</th>
                   <th>Azioni</th>
               </tr>
@@ -52,7 +53,8 @@ export function createTable(parentElement, pubsub) {
                   <td>${e.id}</td>
                   <td>${e.nome}</td>
                   <td>${e.descrizione}</td>
-                  <td>${e.coordinate}</td>
+                  <td>${e.lati}</td>
+                  <td>${e.long}</td>
                   <td>
                       <img src="${e.foto}" alt="${e.nome}" style="width: 150px; height: auto;">
                   </td>
@@ -93,7 +95,8 @@ export function createTable(parentElement, pubsub) {
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Descrizione</th>
-                    <th>Coordinate</th>
+                    <th>Latitudine</th>
+                    <th>Longitudine</th>
                     <th>Foto</th>
                 </tr>
             </thead>
@@ -107,7 +110,8 @@ export function createTable(parentElement, pubsub) {
                     <td>${e.id}</td>
                     <td>${e.nome}</td>
                     <td>${e.descrizione}</td>
-                    <td>${e.coordinate}</td>
+                    <td>${e.lati}</td>
+                    <td>${e.long}</td>
                     <td>
                         <img src="${e.foto}" alt="${e.nome}" style="width: 150px; height: auto;">
                     </td>
@@ -147,8 +151,12 @@ export function createAdd(parentElement, pubsub) {
                                       <textarea class="form-control" id="descrizione" required></textarea>
                                   </div>
                                   <div class="form-group">
-                                      <label for="coordinate">Coordinate</label>
-                                      <input type="text" class="form-control" id="coordinate" required>
+                                      <label for="coordinate">Coordinate Latitudine</label>
+                                      <input type="text" class="form-control" id="coordinate-lat" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="coordinate">Coordinate Longitudine</label>
+                                      <input type="text" class="form-control" id="coordinate-lon" required>
                                   </div>
                                   <div class="form-group">
                                       <label for="foto">Foto (url)</label>
@@ -185,14 +193,16 @@ export function createAdd(parentElement, pubsub) {
           submitButton.onclick = () => {
               const nome = document.getElementById('nome').value;
               const descrizione = document.getElementById('descrizione').value;
-              const coordinate = document.getElementById('coordinate').value;
+              const lon = document.getElementById('coordinate-lon').value;
+              const lat = document.getElementById('coordinate-lat').value;
               const foto = document.getElementById('foto').value;
 
               const nuovoLuogo = {
                   id: luoghi.length + 1,
                   nome: nome,
                   descrizione: descrizione,
-                  coordinate: coordinate,
+                  lati: lat,
+                  long: lon,
                   foto: foto
               };
 
@@ -200,7 +210,7 @@ export function createAdd(parentElement, pubsub) {
               luoghi.push(nuovoLuogo);
 
               // pubblico l'evento
-              pubsub.publish("newPlaceAdded", luoghi);
+              pubsub.publish("newPlaceAdded", luoghi);//luoghi
 
               // Chiudi la modale
               modal.style.display = 'none';
@@ -294,6 +304,7 @@ export function createLogin(parentElement, myToken, pubsub) {
         const inputName = document.getElementById('user').value;
         const inputPassword = document.getElementById('password').value;
         login(inputName, inputPassword).then((result) => {
+            console.log("RESULTTTTT     ",result);
             if (result) {
                 isLogged = true;
                 pubsub.publish("Logged",isLogged);

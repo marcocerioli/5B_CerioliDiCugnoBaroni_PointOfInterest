@@ -23,38 +23,12 @@ fetch('./conf.json')
     console.log("token:  ", myToken);
 
     carica(myKey, myToken).then(() => {
-        console.log("luoghi:  ", luoghi);
+        console.log("CARICA:  ", luoghi);
         render();
       });
   })
   .catch((error) => console.error('Errore:', error));
-/*
-let l = [
-    {
-        "id": "1",
-        "nome": "Roma",
-        "descrizione": "Capitale d'Italia, famosa per la sua storia millenaria, il Colosseo, il Vaticano e la sua cucina tradizionale.",
-        "coordinate": "00000000000",
-        "foto": "https://i.postimg.cc/rwyqGd64/roma.png"
-    },
-    {
-        "id": "2",
-        "nome": "Milano",
-        "descrizione": "Duomo🔥🔥🔥🔥.",
-        "coordinate": "00000000000",
-        "foto": "https://i.postimg.cc/rwyqGd64/roma.png"
 
-    },
-    {
-        "id": "3",
-        "nome": "Vimodrone",
-        "descrizione": "Capitale del mondo.",
-        "coordinate": "00000000000",
-        "foto": "https://i.postimg.cc/rwyqGd64/roma.png"
-
-    }
-];
-*/
 
 const pubsub = createPubSub();
 
@@ -63,10 +37,7 @@ const nav = createNavigator(document.querySelector('#container'));
 let map = createMap(mapContainer);
 
 let table = createTable(tableContainer, pubsub);// creo oggetto
-table.setData(luoghi);
-
 let table2 = createTable(tableAdmin,pubsub);
-
 
 let add = createAdd(modalContainer, pubsub);
 
@@ -85,8 +56,7 @@ function render(){
 
 
 // iscrivo all evento newPlaceAdded
-pubsub.subscribe("newPlaceAdded", (newLuoghi) => {
-  luoghi.push(...newLuoghi);
+pubsub.subscribe("newPlaceAdded", (luoghi) => {
   console.log("Nuovo luogo aggiunto, aggiorno la tabella.");
   table.setData(luoghi); // aggiorna i dati della tabella
   table.renderTable(); // render della tabella con i nuovi dati
